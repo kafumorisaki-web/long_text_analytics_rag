@@ -1,0 +1,196 @@
+{
+  "macro_nodes": {
+    "schema": {
+      "macro_id": {
+        "data_type": "int",
+        "description": "排序主键"
+      },
+      "macro_name": {
+        "data_type": "string",
+        "description": "归纳节点名称"
+      },
+      "type": {
+        "data_type": "string",
+        "description": "溯源标识，如'原文'或'某创作分支'"
+      },
+      "custom_properties": {
+        "fieldA_from_segment_nodes": {
+          "summaryAA": {},
+          "summaryAB": {}
+        },
+        "fieldB_from_segment_nodes": {
+          "summaryBA": {}
+        }
+      }
+    },
+    "instances": [
+      {
+        "macro_id": 1,
+        "macro_name": "",
+        "segment_range": []
+      },
+      {
+        "macro_id": 2,
+        "macro_name": "",
+        "segment_range": []
+      }
+    ]
+  },
+  "segment_nodes": {
+    "parsing_rules": {
+      "segment_business_name": "",
+      "split_pattern": "",
+      "title_clean_bracket_pattern": "",
+      "title_clean_prefix_pattern": "",
+      "entity_name_clean_pattern": ""
+    },
+    "schema": {
+      "segment_id": {
+        "data_type": "int",
+        "description": "物理排序与检索主键"
+      },
+      "segment_name": {
+        "data_type": "string",
+        "description": "脉络展示名称"
+      },
+      "type": {
+        "data_type": "string",
+        "description": "溯源标识，如'原文'或'某创作分支'"
+      },
+      "segment_summary": {
+        "data_type": "string",
+        "description": "本段落剧情/事实总结。必须保留。"
+      },
+      "custom_properties": {
+        "fieldA": {},
+        "fieldB": {}
+      }
+    }
+  },
+  "entity_system": {
+    "base_node_schema": {
+      "name": {
+        "data_type": "string",
+        "description": "实体的唯一标识主键"
+      },
+      "type": {
+        "data_type": "string",
+        "description": "溯源标识，如'原文'或'某创作分支'"
+      }
+    },
+    "entity_classes": {
+      "EntityClassA": {
+        "extraction_description": "",
+        "state_properties": {
+          "fieldAA": {},
+          "fieldAB": {}
+        }
+      },
+      "EntityClassB": {
+        "extraction_description": "",
+        "state_properties": {
+          "fieldBA": {},
+          "fieldBB": {}
+        }
+      }
+    }
+  },
+  "relationships": {
+    "hardcoded_topologies": {
+      "CONTAINS": {
+        "source": "Macro",
+        "target": "Segment"
+      },
+      "NEXT": {
+        "source": "Any",
+        "target": "Any"
+      },
+      "HAS_STATE": {
+        "source": "Entity",
+        "target": "State"
+      },
+      "START_AT": {
+        "source": "State",
+        "target": "Segment"
+      },
+      "END_AT": {
+        "source": "State",
+        "target": "Segment"
+      },
+      "DEBUTED_IN": {
+        "source": "Entity",
+        "target": "Segment"
+      },
+      "APPEARED_IN": {
+        "source": "Entity",
+        "target": "Segment",
+        "properties": {
+          "summary": "str"
+        }
+      }
+    },
+    "custom_relations": {
+      "RelationGroupA": {
+        "allowed_sources": [
+          "EntityClassA",
+          "EntityClassB"
+        ],
+        "allowed_targets": [
+          "EntityClassA",
+          "EntityClassB"
+        ],
+        "relation_properties": {
+          "fieldAA": {},
+          "fieldAB": {}
+        }
+      },
+      "RelationGroupB": {
+        "allowed_sources": [
+          "EntityClassC"
+        ],
+        "allowed_targets": [
+          "EntityClassA",
+          "EntityClassB"
+        ],
+        "relation_properties": {
+          "fieldBA": {},
+          "fieldBB": {}
+        }
+      }
+    }
+  },
+  "vector_system": {
+    "payload_schema": {
+      "segment_id": {
+        "data_type": "int",
+        "description": "和 Neo4j 对齐的物理主键"
+      },
+      "chunk_index": {
+        "data_type": "int",
+        "description": "切片排序主键"
+      },
+      "text": {
+        "data_type": "string",
+        "description": "必须保留的文本生肉"
+      },
+      "type": {
+        "data_type": "string",
+        "description": "溯源标识，如'原文'或'某创作分支'"
+      },
+      "custom_payload_fields": {
+        "fieldA": {},
+        "fieldB": {}
+      }
+    },
+    "vector_strategy": {
+      "text_vector": {
+        "source": "text",
+        "description": "对原文 text 的强制向量化"
+      },
+      "meta_vector_components": [
+        "entities",
+        "fieldA"
+      ]
+    }
+  }
+}

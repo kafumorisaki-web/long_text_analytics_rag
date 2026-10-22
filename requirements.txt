@@ -1,0 +1,16 @@
+litellm
+qdrant-client
+langchain-core
+pydantic
+langgraph
+python-dotenv
+streamlit
+pandas
+plotly
+beautifulsoup4
+ebooklib
+python-docx
+charset-normalizer
+pymupdf
+neo4j
+langgraph-checkpoint-sqlite
